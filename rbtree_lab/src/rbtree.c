@@ -67,8 +67,36 @@ static void inorder(const rbtree *t, const node_t *node, key_t *arr, size_t *i, 
 
 
 node_t *rbtree_insert(rbtree *t, const key_t key) {
-  // TODO: implement insert
-  return t->root;
+  node_t *z = malloc(sizeof(node_t)); // 새로운 key 노드
+  z ->color = RBTREE_RED;
+  z -> key = key;
+  z -> left = z -> right = z -> parent = t -> nil;
+
+  node_t *x = t->root; // Root부터 시작
+  node_t *y = t->nil; // 부모 후보
+
+  // BST 위치 찾기
+  while (x != t->nil) {
+      y = x;
+      if(key < x) x = x->left;
+      else if(key > x) x = x->right;
+
+  }
+
+  // 부모 자식 연결
+  z -> parent = y;
+  if (y == t->nil) t -> root = z;
+  else if (key < y -> key) y -> left = z;
+  else y -> right = z;
+
+  insert_fixup(t,z);
+
+  return z;
+
+}
+
+void insert_fixup(rbtree *t, node_t *z){
+
 }
 
 int rbtree_erase(rbtree *t, node_t *p) {

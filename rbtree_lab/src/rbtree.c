@@ -8,7 +8,7 @@ static void l_rotate(rbtree *t, node_t *x);
 static void insert_fixup(rbtree *t, node_t *z);
 static void transplant(rbtree *t, node_t *u, node_t *v);
 static void delete_fixup(rbtree *t, node_t *x);
-node_t *minimum(const rbtree *t, node_t *x);
+static node_t *minimum(const rbtree *t, node_t *x);
 
 rbtree *new_rbtree(void) {
   rbtree *p = (rbtree *)calloc(1, sizeof(rbtree));
@@ -197,7 +197,7 @@ static void transplant(rbtree *t, node_t *u, node_t *v) {
   v->parent = u->parent;
 }
 
-node_t *minimum(const rbtree *t, node_t *x) {
+static node_t *minimum(const rbtree *t, node_t *x) {
   while (x->left != t->nil)
     x = x->left;
   return x;

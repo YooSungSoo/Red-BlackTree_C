@@ -4,16 +4,23 @@
 
 rbtree *new_rbtree(void) {
   rbtree *p = (rbtree *)calloc(1, sizeof(rbtree));
-    p->nil  = calloc(1,sizeof(node_t));
-    p->nil->color = RBTREE_BLACK;
-    p->nil->left = p->nil->right = p->nil->parent = p->nil;
-    p->root = p->nil;
+  p->nil = calloc(1,sizeof(node_t));
+  p ->nil ->color = RBTREE_BLACK;
+  p ->nil ->left = p -> nil -> right = p-> nil ->parent = p ->nil;
+  p ->root = p -> nil;
   return p;
 }
 
 void delete_rbtree(rbtree *t) {
-  // TODO: reclaim the tree nodes's memory
+  postorder_free(t,t->root);
   free(t);
+}
+
+static void postorder_free(rbtree *t,node_t *x){
+  if(x==t->nil) return;
+  postorder_free(t,x->left);
+  postorder_free(t,x->right);
+  free(x);
 }
 
 node_t *rbtree_insert(rbtree *t, const key_t key) {
